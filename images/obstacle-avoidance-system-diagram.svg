@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#111"/>
+    </marker>
+    <style>
+      .title { font: 700 28px Arial, Helvetica, sans-serif; fill: #111; }
+      .group-title { font: 700 18px Arial, Helvetica, sans-serif; fill: #111; }
+      .node-title { font: 700 16px Arial, Helvetica, sans-serif; fill: #111; }
+      .node-text { font: 14px Arial, Helvetica, sans-serif; fill: #111; }
+      .small { font: 12px Arial, Helvetica, sans-serif; fill: #333; }
+      .group { fill: #fff; stroke: #111; stroke-width: 2; }
+      .header { fill: #f0f0f0; stroke: #111; stroke-width: 2; }
+      .box { fill: #fff; stroke: #111; stroke-width: 1.6; }
+      .flow { fill: none; stroke: #111; stroke-width: 1.8; marker-end: url(#arrow); }
+      .config { fill: none; stroke: #555; stroke-width: 1.5; stroke-dasharray: 7 5; marker-end: url(#arrow); }
+      .divider { stroke: #111; stroke-width: 1.2; }
+      .label-bg { fill: #fff; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" fill="#fff"/>
+  <text x="800" y="44" text-anchor="middle" class="title">Obstacle Avoidance Plugin — System Diagram</text>
+
+  <!-- External input -->
+  <rect x="620" y="72" width="500" height="58" class="box"/>
+  <text x="870" y="107" text-anchor="middle" class="node-title">Raw Movement Input (FVector2D)</text>
+
+  <!-- Settings -->
+  <rect x="40" y="72" width="420" height="158" class="group"/>
+  <rect x="40" y="72" width="420" height="42" class="header"/>
+  <text x="250" y="99" text-anchor="middle" class="group-title">UObstacleAvoidanceSettings</text>
+  <text x="62" y="138" class="node-text">• Sensor classes and collision channel</text>
+  <text x="62" y="161" class="node-text">• Trace radius, offsets and prediction distance</text>
+  <text x="62" y="184" class="node-text">• Interpolation, dead zone and input scale</text>
+  <text x="62" y="207" class="node-text">• Optional capsule-radius settings</text>
+
+  <!-- Detection group -->
+  <rect x="40" y="276" width="500" height="546" class="group"/>
+  <rect x="40" y="276" width="500" height="42" class="header"/>
+  <text x="290" y="303" text-anchor="middle" class="group-title">Detection Layer</text>
+
+  <rect x="82" y="346" width="416" height="62" class="box"/>
+  <text x="290" y="372" text-anchor="middle" class="node-title">IAvoidanceSensor::Sense()</text>
+  <text x="290" y="392" text-anchor="middle" class="small">BlueprintNativeEvent strategy interface</text>
+
+  <path d="M290 408 V446" class="flow"/>
+
+  <rect x="82" y="447" width="416" height="112" class="box"/>
+  <text x="290" y="474" text-anchor="middle" class="node-title">UAvoidanceSphereTraceSensor</text>
+  <line x1="82" y1="486" x2="498" y2="486" class="divider"/>
+  <text x="290" y="510" text-anchor="middle" class="node-text">SweepSingleByChannel + configurable sphere radius</text>
+  <text x="290" y="533" text-anchor="middle" class="node-text">Hit distance mapped to normalized strength (0…1)</text>
+
+  <path d="M290 559 V590 H178 V618" class="flow"/>
+  <path d="M290 590 H402 V618" class="flow"/>
+
+  <rect x="82" y="620" width="192" height="72" class="box"/>
+  <text x="178" y="650" text-anchor="middle" class="node-title">Left Sensor Result</text>
+  <text x="178" y="674" text-anchor="middle" class="small">positive steering</text>
+
+  <rect x="306" y="620" width="192" height="72" class="box"/>
+  <text x="402" y="650" text-anchor="middle" class="node-title">Right Sensor Result</text>
+  <text x="402" y="674" text-anchor="middle" class="small">negative steering</text>
+
+  <rect x="82" y="730" width="416" height="58" class="box"/>
+  <text x="290" y="755" text-anchor="middle" class="node-title">FAvoidanceSensorResult</text>
+  <text x="290" y="775" text-anchor="middle" class="small">Detected • Strength • Steering • Hit • Sensor Name</text>
+
+  <!-- Core component -->
+  <rect x="620" y="172" width="500" height="650" class="group"/>
+  <rect x="620" y="172" width="500" height="48" class="header"/>
+  <text x="870" y="203" text-anchor="middle" class="group-title">UObstacleAvoidanceComponent</text>
+
+  <rect x="660" y="252" width="420" height="58" class="box"/>
+  <text x="870" y="277" text-anchor="middle" class="node-title">Set / Process Movement Input</text>
+  <text x="870" y="297" text-anchor="middle" class="small">Clamp and normalize raw input</text>
+
+  <path d="M870 310 V344" class="flow"/>
+
+  <rect x="660" y="346" width="420" height="58" class="box"/>
+  <text x="870" y="371" text-anchor="middle" class="node-title">Smooth Side Input</text>
+  <text x="870" y="391" text-anchor="middle" class="small">FInterpTo using configured lateral axis</text>
+
+  <path d="M870 404 V438 H770 V462" class="flow"/>
+  <path d="M870 438 H970 V462" class="flow"/>
+
+  <rect x="660" y="464" width="220" height="64" class="box"/>
+  <text x="770" y="491" text-anchor="middle" class="node-title">EvaluateSide(Left)</text>
+  <text x="770" y="513" text-anchor="middle" class="small">retain strongest sensor result</text>
+
+  <rect x="900" y="464" width="220" height="64" class="box"/>
+  <text x="1010" y="491" text-anchor="middle" class="node-title">EvaluateSide(Right)</text>
+  <text x="1010" y="513" text-anchor="middle" class="small">retain strongest sensor result</text>
+
+  <path d="M770 528 V562 H870 V582" class="flow"/>
+  <path d="M1010 528 V562 H870" class="flow"/>
+
+  <rect x="660" y="584" width="420" height="68" class="box"/>
+  <text x="870" y="611" text-anchor="middle" class="node-title">Combine Signed Steering</text>
+  <text x="870" y="634" text-anchor="middle" class="small">left + right → AvoidanceAlphaSigned and pressure</text>
+
+  <path d="M870 652 V686" class="flow"/>
+
+  <rect x="660" y="688" width="420" height="92" class="box"/>
+  <text x="870" y="716" text-anchor="middle" class="node-title">Update FAvoidanceState</text>
+  <line x1="660" y1="730" x2="1080" y2="730" class="divider"/>
+  <text x="870" y="751" text-anchor="middle" class="small">wall flags • signed alpha • pressure</text>
+  <text x="870" y="770" text-anchor="middle" class="small">closest hit • hit actor</text>
+
+  <!-- Main input flow -->
+  <path d="M870 130 V252" class="flow"/>
+
+  <!-- Sensor results feed component side evaluation -->
+  <path d="M178 692 V708 H570 V496 H660" class="flow"/>
+  <path d="M498 656 H584 V442 H1145 V496 H1120" class="flow"/>
+
+  <!-- Settings dependencies -->
+  <path d="M250 230 V250 H290 V346" class="config"/>
+  <path d="M460 151 H590 V238 H620" class="config"/>
+  <rect x="510" y="139" width="78" height="20" class="label-bg"/>
+  <text x="549" y="153" text-anchor="middle" class="small">configures</text>
+
+  <!-- Outputs -->
+  <rect x="1220" y="218" width="330" height="70" class="box"/>
+  <text x="1385" y="248" text-anchor="middle" class="node-title">Corrected Movement Input</text>
+  <text x="1385" y="271" text-anchor="middle" class="small">ApplyAvoidanceToInput()</text>
+  <path d="M1080 618 H1170 V253 H1220" class="flow"/>
+
+  <rect x="1220" y="358" width="330" height="70" class="box"/>
+  <text x="1385" y="388" text-anchor="middle" class="node-title">Blueprint / Gameplay</text>
+  <text x="1385" y="411" text-anchor="middle" class="small">OnAvoidanceUpdated(State)</text>
+  <path d="M1080 716 H1184 V393 H1220" class="flow"/>
+
+  <rect x="1220" y="498" width="330" height="70" class="box"/>
+  <text x="1385" y="528" text-anchor="middle" class="node-title">UObstacleAvoidanceAnimInstance</text>
+  <text x="1385" y="551" text-anchor="middle" class="small">reads AvoidanceAlphaSigned</text>
+  <path d="M1080 740 H1198 V533 H1220" class="flow"/>
+
+  <rect x="1270" y="614" width="280" height="62" class="box"/>
+  <text x="1410" y="641" text-anchor="middle" class="node-title">AnimGraph / BlendSpace</text>
+  <text x="1410" y="662" text-anchor="middle" class="small">visual body response</text>
+  <path d="M1385 568 V590 H1410 V614" class="flow"/>
+
+  <rect x="1220" y="730" width="330" height="70" class="box"/>
+  <text x="1385" y="760" text-anchor="middle" class="node-title">UCapsuleComponent</text>
+  <text x="1385" y="783" text-anchor="middle" class="small">radius adapted from avoidance pressure</text>
+  <path d="M1080 760 H1168 V765 H1220" class="flow"/>
+
+  <!-- Legend -->
+  <path d="M54 858 H118" class="flow"/>
+  <text x="132" y="862" class="small">runtime data flow</text>
+  <path d="M280 858 H344" class="config"/>
+  <text x="358" y="862" class="small">configuration dependency</text>
+</svg>
