@@ -12,6 +12,7 @@
  * summary is optional compact card copy; description is used on the project detail page.
  * developedBy and period are displayed in the project metadata.
  * For NDA projects, developedBy is always rendered as "NDA" automatically.
+ * workInProgress adds a "Work in Progress" badge to public work.
  * personal adds a "Personal Project" badge to public work.
  * commercial labels production work as a "Commercial Project" case study.
  * links.github is optional: use a URL to show the button or null to hide it.
@@ -23,6 +24,35 @@ window.PROJECTS_CONFIG = {
 };
 
 window.PROJECTS = [
+  {
+    slug: "upcoming-unreal-project",
+    title: "Unannounced Project",
+    status: "public",
+    order: 1,
+    featured: false,
+    workInProgress: true,
+    commercial: true,
+    layout: "standard",
+    media: {
+      type: "image",
+      src: "images/coming-soon.png",
+      poster: "",
+      alt: "Coming soon project preview",
+      position: "center"
+    },
+    stack: ["C++", "Unreal Engine 5", "Steam"],
+    description: "More details about this project will be shared later.",
+    role: "Gameplay Programmer / Unreal Engine C++ Developer",
+    developedBy: "Details Soon",
+    period: "Apr 2026 – Present",
+    contributions: [],
+    technical: [],
+    links: {
+      details: true,
+      github: null,
+      store: null
+    }
+  },
   {
     slug: "questbound",
     title: "Questbound",

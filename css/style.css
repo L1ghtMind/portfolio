@@ -494,6 +494,11 @@ h1, h2, h3, h4, h5, h6, figure {
   background: #f69422;
   border-color: #f69422;
 }
+.project-status-work-in-progress {
+  color: #fff;
+  background: #7448b8;
+  border-color: #956fd0;
+}
 .project-status-personal {
   color: #fff;
   background: #005082;

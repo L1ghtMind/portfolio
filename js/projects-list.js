@@ -113,6 +113,8 @@
     var badges = "";
     if (isNda) {
       badges += '<span class="project-status-badge"><i class="icon-lock" aria-hidden="true"></i> Under NDA</span>';
+    } else if (project.workInProgress) {
+      badges += '<span class="project-status-badge project-status-work-in-progress">Work in Progress</span>';
     } else if (project.featured) {
       badges += '<span class="project-status-badge project-status-featured">Featured</span>';
     } else if (project.personal) {

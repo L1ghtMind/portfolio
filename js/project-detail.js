@@ -77,7 +77,9 @@
   }
 
   heroCopy.innerHTML =
-    (project.commercial
+    (project.workInProgress
+      ? '<span class="project-detail-eyebrow">Work in Progress' + (project.commercial ? ' &middot; Commercial Project' : '') + '</span>'
+      : project.commercial
       ? '<span class="project-detail-eyebrow">' + (project.featured ? 'Featured Commercial Project' : 'Commercial Project') + '</span>'
       : project.personal
         ? '<span class="project-detail-eyebrow">Personal Project</span>'
